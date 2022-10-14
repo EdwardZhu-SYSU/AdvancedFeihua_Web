@@ -1,0 +1,64 @@
+<head>
+    <title>POECAT Database: Advanced Feihua v0.1</title>
+    <style>
+	*{margin:0;padding:0}
+	.content{margin:20px auto;padding:5px;width:725px;height:530px;border:1px solid black;}
+	.right{float:right;}
+	.div1{width:400px;height:100px;border:1px solid black;margin:5px;}
+	.div2{width:400px;height:200px;border:1px solid black;margin:5px;}
+	.div3{width:400px;height:200px;border:1px solid black;margin:5px;}
+	.div4{width:300px;height:515px;border:1px solid black;float:left;margin:5px;}
+    </style>
+</head>
+<body>
+<div class="content">
+	<div class="right">
+        <div class="div1">
+            <form method="POST" align="center">
+                {% csrf_token %}
+                <input type="text" name="sentence" placeholder="输入诗句" size="50px">
+                <input type="submit" value="提交">
+                <span style="color: darkred">{{ error_message }}</span>
+            </form>
+
+            <div align="center">
+                <b style="color: red">回合 {{ round_number }}</b>
+                <p style="color: red">关键词 <b>{{ key_description }}</b></p>
+            </div>
+
+        </div>
+        <div class="div2" align="center">
+            <b style="color: darkred">这一回合玩家接：</b>
+            <h4 style="color: chocolate">{{ output_poem_sentence_user }}</h4>
+            <h3>{{ poem_item_last.title }} {{ poem_item_last.rhythmic }}</h3>
+            <b>{{ poem_item_last.author }}</b>
+            {% for sentence in poem_item_last.paragraphs %}
+                <p>{{ sentence }}</p>
+            {% endfor %}
+        </div>
+        <div class="div3" align="center">
+            <b style="color: darkred">上一回合电脑接：</b>
+            <h4 style="color: chocolate">{{ output_poem_sentence_computer }}</h4>
+            <h3>{{ poem_item.title }} {{ poem_item.rhythmic }}</h3>
+                <b>{{ poem_item.author }}</b>
+                {% for sentence in poem_item.paragraphs %}
+                    <p>{{ sentence }}</p>
+                {% endfor %}
+        </div>
+    </div>
+    <div class="div4">
+        <h2>Advanced Feihua v0.1</h2>
+        <h4>An interactive game based on POECAT database</h4>
+        <p>Created by EdwardMashed, Submit "quit" to end.<br /><a href="../home/">Back to homepage</a></p>
+        <form method='POST'>
+                {% csrf_token %}
+                <input type="hidden" name="submit_highscore" value="1">
+                <div align="center">
+                    <br /><button type='submit'>提交记录</button>
+                    <p>Highscore: {{ highscore }}</p>
+                </div>
+        </form>
+    </div>
+</div>
+
+</body>

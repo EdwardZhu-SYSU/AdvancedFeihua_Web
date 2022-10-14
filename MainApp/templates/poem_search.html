@@ -1,0 +1,27 @@
+<head>
+    <title>POECAT Database: Poem searcher v0.1</title>
+</head>
+<body>
+    <h1 align="center">Poem searcher v0.1</h1>
+    <h4 align="center">Search poems with basic filter using POECAT database</h4>
+    <p align="center">Created by EdwardMashed<br /><a href="../home">Back to homepage</a></p>
+
+
+    <form method="POST" align="center">
+        {% csrf_token %}
+        <input type="text" name="author" placeholder="作者">
+        <input type="text" name="key_phrase" placeholder="关键词">
+        <input type="submit" value="Submit">
+        <span style="color: darkred">{{ error_message }}</span>
+    </form>
+    <p style="color: darkred" align="center">{{ result_length }}</p>
+    <div align="center">
+        {% for poem_item in result_list %}
+            <h3>{{ poem_item.0 }} {{ poem_item.1 }}</h3>
+            <b>{{ poem_item.2 }}</b>
+            {% for sentence in poem_item.3 %}
+                <p>{{ sentence }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</body>
